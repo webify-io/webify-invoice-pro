@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: 'Webify Invoice Mate',
+	title: 'Webify Invoice Pro',
 	description: 'Developed by Webify',
 };
 
