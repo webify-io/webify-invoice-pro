@@ -6,7 +6,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { InvoiceActions } from './InvoiceAcrtions';
+import { InvoiceActions } from './InvoiceActions';
 import prisma from '../utils/db';
 import { requireUser } from '../utils/hooks';
 import { formatCurrency } from '../utils/formatCurrency';
@@ -70,7 +70,7 @@ export async function InvoiceList() {
 							}).format(invoice.createdAt)}
 						</TableCell>
 						<TableCell className="text-right">
-							<InvoiceActions />
+							<InvoiceActions id={invoice.id} />
 						</TableCell>
 					</TableRow>
 				))}

@@ -18,6 +18,7 @@ import {
 import { signOut } from '../utils/auth';
 import prisma from '../utils/db';
 import { redirect } from 'next/navigation';
+import { Toaster } from '@/components/ui/sonner';
 
 // Check if the user completed onboarding:
 async function getUser(userId: string) {
@@ -126,6 +127,7 @@ export default async function DashboardLayout({
 					</main>
 				</div>
 			</div>
+			<Toaster richColors closeButton />
 		</>
 	);
 }

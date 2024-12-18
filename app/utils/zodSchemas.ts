@@ -15,7 +15,7 @@ export const invoiceSchema = z.object({
 
 	date: z.string().min(1, 'Date is required'),
 
-	dueDate: z.number().min(1, 'Due Date is required'),
+	dueDate: z.number().min(0, 'Due Date is required'),
 
 	fromName: z.string().min(1, 'Your Name is required'),
 
