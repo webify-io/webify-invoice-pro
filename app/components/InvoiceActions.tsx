@@ -11,6 +11,7 @@ import {
 	CheckCircle,
 	DownloadCloudIcon,
 	Eye,
+	LockOpen,
 	Mail,
 	MoreHorizontal,
 	Pencil,
@@ -21,9 +22,10 @@ import { toast } from 'sonner';
 
 interface iAppProps {
 	id: string;
+	status: string;
 }
 
-export function InvoiceActions({ id }: iAppProps) {
+export function InvoiceActions({ id, status }: iAppProps) {
 	// Function to handle reminder email:
 	const handleSendReminder = () => {
 		toast.promise(
@@ -49,22 +51,36 @@ export function InvoiceActions({ id }: iAppProps) {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
-				<DropdownMenuItem asChild>
-					<Link href={`/dashboard/invoices/${id}`}>
-						<Pencil className="size-4 mr-2" />
-						Edit Invoice
-					</Link>
-				</DropdownMenuItem>
-				<DropdownMenuItem asChild>
-					<Link href="">
-						<CheckCircle className="size-4 mr-2" />
-						Mark as Paid
-					</Link>
-				</DropdownMenuItem>
-				<DropdownMenuItem onClick={handleSendReminder}>
-					<Mail className="size-4 mr-2" />
-					Reminder Email
-				</DropdownMenuItem>
+				{status !== 'PAID' && (
+					<DropdownMenuItem asChild>
+						<Link href={`/dashboard/invoices/${id}`}>
+							<Pencil className="size-4 mr-2" />
+							Edit Invoice
+						</Link>
+					</DropdownMenuItem>
+				)}
+				{status !== 'PAID' && (
+					<DropdownMenuItem asChild>
+						<Link href={`/dashboard/invoices/${id}/paid`}>
+							<CheckCircle className="size-4 mr-2" />
+							Mark as Paid
+						</Link>
+					</DropdownMenuItem>
+				)}
+				{status !== 'PAID' && (
+					<DropdownMenuItem onClick={handleSendReminder}>
+						<Mail className="size-4 mr-2" />
+						Reminder Email
+					</DropdownMenuItem>
+				)}
+				{status == 'PAID' && (
+					<DropdownMenuItem asChild>
+						<Link href={`/dashboard/invoices/${id}/reopen`}>
+							<LockOpen className="size-4 mr-2" />
+							Reopen Invoice
+						</Link>
+					</DropdownMenuItem>
+				)}
 				<DropdownMenuItem asChild>
 					<Link href={`/api/invoice/${id}`} target="_blank">
 						<DownloadCloudIcon className="size-4 mr-2" />

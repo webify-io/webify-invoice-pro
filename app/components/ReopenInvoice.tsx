@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -21,72 +19,62 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { CalendarIcon } from 'lucide-react';
 import { SubmitButton } from './SubmitButton';
-import { useActionState, useState } from 'react';
-import { useForm } from '@conform-to/react';
-import { parseWithZod } from '@conform-to/zod';
-import { invoiceSchema } from '../utils/zodSchemas';
-import { editInvoice } from '../actions';
+import { MarkAsPendingAction } from '../actions';
 import { formatCurrency } from '../utils/formatCurrency';
 import { Prisma } from '@prisma/client';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { requireUser } from '../utils/hooks';
+import prisma from '../utils/db';
+
+// Function to check if an authorised user has access to the invoice:
+async function authorizedUser(invoiceId: string, userId: string) {
+	const data = await prisma.invoice.findUnique({
+		where: {
+			id: invoiceId,
+			userId: userId,
+		},
+	});
+
+	if (!data) {
+		return redirect('/dashboard/invoices');
+	}
+}
+
+type Params = Promise<{ invoiceId: string }>;
 
 interface iAppProps {
 	data: Prisma.InvoiceGetPayload<{}>;
+	params: Params;
 }
 
-export function EditInvoice({ data }: iAppProps) {
-	// Client-Side Validation:
-	const [lastResult, action] = useActionState(editInvoice, undefined);
-	const [form, fields] = useForm({
-		lastResult,
+export default async function ReopenInvoice({ data, params }: iAppProps) {
+	const { invoiceId } = await params;
+	const session = await requireUser();
 
-		onValidate({ formData }) {
-			return parseWithZod(formData, {
-				schema: invoiceSchema,
-			});
-		},
-
-		shouldValidate: 'onBlur', // Validate the form once we click out of the input
-		shouldRevalidate: 'onInput', // Revalidate when we click into the input again
-	});
-
-	const [selectedDate, setSelectedDate] = useState(data.date);
-	const [rate, setRate] = useState(data.invoiceItemRate.toString());
-	const [quantity, setQuantity] = useState(data.invoiceitemQuantity.toString());
-	const [currency, setCurrency] = useState(data.currency);
-
-	const calculateTotal = (Number(quantity) || 0) * (Number(rate) || 0);
+	await authorizedUser(invoiceId, session.user?.id as string);
 
 	return (
 		<Card className="w-full max-w-4xl mx-auto">
 			<CardContent className="p-6">
-				<form id={form.id} action={action} onSubmit={form.onSubmit} noValidate>
-					{/* Create hidden input for Calender component for formData and Conform */}
-					<input
-						type="hidden"
-						name={fields.date.name}
-						value={selectedDate.toISOString()}
-					/>
-					{/* Make the total available for our formData  */}
-					<input
-						type="hidden"
-						name={fields.total.name}
-						value={calculateTotal}
-					/>
-					{/* Create input to make the formData Id available for the edit server action */}
-					<input type="hidden" name="id" value={data.id} />
+				<form
+					id="form"
+					action={async () => {
+						'use server';
 
+						await MarkAsPendingAction(invoiceId);
+					}}
+					noValidate
+				>
 					<div className="flex flex-col gap-1 w-fit mb-6">
 						<div className="flex items-center gap-4">
 							<Badge variant="secondary">Draft</Badge>
 							<Input
-								name={fields.invoiceName.name}
-								key={fields.invoiceName.key}
 								defaultValue={data.invoiceName}
 								placeholder="Test 123"
+								disabled
 							/>
 						</div>
-						<p className="text-sm text-red-500">{fields.invoiceName.errors}</p>
 					</div>
 
 					<div className="grid md:grid-cols-3 gap-6 mb-6">
@@ -97,26 +85,17 @@ export function EditInvoice({ data }: iAppProps) {
 									#
 								</span>
 								<Input
-									name={fields.invoiceNumber.name}
-									key={fields.invoiceNumber.key}
 									defaultValue={data.invoiceNumber}
 									className="rounded-l-none"
 									placeholder="5"
+									disabled
 								/>
 							</div>
-							<p className="text-sm text-red-500">
-								{fields.invoiceNumber.errors}
-							</p>
 						</div>
 
 						<div>
 							<Label>Currency</Label>
-							<Select
-								defaultValue="ZAR"
-								name={fields.currency.name}
-								key={fields.currency.key}
-								onValueChange={(value) => setCurrency(value)}
-							>
+							<Select defaultValue={data.currency} disabled>
 								<SelectTrigger>
 									<SelectValue placeholder="Select Currency" />
 								</SelectTrigger>
@@ -126,7 +105,6 @@ export function EditInvoice({ data }: iAppProps) {
 									<SelectItem value="EUR">Europe -- EUR</SelectItem>
 								</SelectContent>
 							</Select>
-							<p className="text-sm text-red-500">{fields.currency.errors}</p>
 						</div>
 					</div>
 
@@ -135,30 +113,23 @@ export function EditInvoice({ data }: iAppProps) {
 							<Label>Invoice From</Label>
 							<div className="space-y-2">
 								<Input
-									name={fields.fromName.name}
-									key={fields.fromName.key}
 									placeholder="Your Name"
 									defaultValue={data.fromName}
+									disabled
 								/>
-								<p className="text-sm text-red-500">{fields.fromName.errors}</p>
 								<Input
-									name={fields.fromEmail.name}
-									key={fields.fromEmail.key}
 									placeholder="Your Email"
 									defaultValue={data.fromEmail}
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.fromEmail.errors}
-								</p>
 								<Input
-									name={fields.fromAddress.name}
-									key={fields.fromAddress.key}
 									placeholder="Your Address"
 									defaultValue={data.fromAddress}
+									disabled
 								/>
-								<p className="text-sm text-red-500">
+								{/* <p className="text-sm text-red-500">
 									{fields.fromAddress.errors}
-								</p>
+								</p> */}
 							</div>
 						</div>
 
@@ -166,32 +137,22 @@ export function EditInvoice({ data }: iAppProps) {
 							<Label>Invoice Recipient</Label>
 							<div className="space-y-2">
 								<Input
-									name={fields.clientName.name}
-									key={fields.clientName.key}
 									defaultValue={data.clientName}
 									placeholder="Client Name"
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.clientName.errors}
-								</p>
+
 								<Input
-									name={fields.clientEmail.name}
-									key={fields.clientEmail.key}
 									defaultValue={data.clientEmail}
 									placeholder="Client Email"
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.clientEmail.errors}
-								</p>
+
 								<Input
-									name={fields.clientAddress.name}
-									key={fields.clientAddress.key}
 									defaultValue={data.clientAddress}
 									placeholder="Client Address"
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.clientAddress.errors}
-								</p>
 							</div>
 						</div>
 					</div>
@@ -207,13 +168,14 @@ export function EditInvoice({ data }: iAppProps) {
 									<Button
 										variant="outline"
 										className="w-[280px] text-left justify-start"
+										disabled
 									>
 										<CalendarIcon />
 
-										{selectedDate ? (
+										{data.date ? (
 											new Intl.DateTimeFormat('en-US', {
 												dateStyle: 'long',
-											}).format(selectedDate)
+											}).format(data.date)
 										) : (
 											<span>Pick a Date</span>
 										)}
@@ -221,23 +183,17 @@ export function EditInvoice({ data }: iAppProps) {
 								</PopoverTrigger>
 								<PopoverContent>
 									<Calendar
-										selected={selectedDate}
-										onSelect={(date) => setSelectedDate(date || new Date())}
+										selected={data.date}
 										mode="single"
 										fromDate={new Date()}
 									/>
 								</PopoverContent>
 							</Popover>
-							<p className="text-sm text-red-500">{fields.date.errors}</p>
 						</div>
 
 						<div>
 							<Label>Invoice Due</Label>
-							<Select
-								name={fields.dueDate.name}
-								key={fields.dueDate.key}
-								defaultValue={data.dueDate.toString()}
-							>
+							<Select defaultValue={data.dueDate.toString()} disabled>
 								<SelectTrigger>
 									<SelectValue placeholder="Select Due Date" />
 								</SelectTrigger>
@@ -247,7 +203,6 @@ export function EditInvoice({ data }: iAppProps) {
 									<SelectItem value="30">Net 30</SelectItem>
 								</SelectContent>
 							</Select>
-							<p className="text-sm text-red-500">{fields.dueDate.errors}</p>
 						</div>
 					</div>
 
@@ -262,46 +217,32 @@ export function EditInvoice({ data }: iAppProps) {
 						<div className="grid grid-cols-12 gap-4 mb-4">
 							<div className="col-span-6">
 								<Textarea
-									name={fields.invoiceItemDescription.name}
-									key={fields.invoiceItemDescription.key}
 									defaultValue={data.invoiceItemDescription}
 									placeholder="Item Name"
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.invoiceItemDescription.errors}
-								</p>
 							</div>
 							<div className="col-span-2">
 								<Input
-									name={fields.invoiceitemQuantity.name}
-									key={fields.invoiceitemQuantity.key}
 									type="number"
 									placeholder="0"
-									value={quantity}
-									onChange={(e) => setQuantity(e.target.value)}
+									value={data.invoiceitemQuantity}
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.invoiceitemQuantity.errors}
-								</p>
 							</div>
 							<div className="col-span-2">
 								<Input
-									name={fields.invoiceItemRate.name}
-									key={fields.invoiceItemRate.key}
 									type="number"
 									placeholder="0"
-									value={rate}
-									onChange={(e) => setRate(e.target.value)}
+									value={data.invoiceItemRate}
+									disabled
 								/>
-								<p className="text-sm text-red-500">
-									{fields.invoiceItemRate.errors}
-								</p>
 							</div>
 							<div className="col-span-2">
 								<Input
 									value={formatCurrency({
-										amount: calculateTotal,
-										currency: currency as any,
+										amount: data.total,
+										currency: data.currency as any,
 									})}
 									placeholder="0"
 									disabled
@@ -316,17 +257,17 @@ export function EditInvoice({ data }: iAppProps) {
 								<span>Subtotal</span>
 								<span>
 									{formatCurrency({
-										amount: calculateTotal,
-										currency: currency as any,
+										amount: data.total,
+										currency: data.currency as any,
 									})}
 								</span>
 							</div>
 							<div className="flex justify-between py-2 border-t">
-								<span>Total ({currency})</span>
+								<span>Total ({data.currency})</span>
 								<span className="font-medium underline underline-offset-4">
 									{formatCurrency({
-										amount: calculateTotal,
-										currency: currency as any,
+										amount: data.total,
+										currency: data.currency as any,
 									})}
 								</span>
 							</div>
@@ -336,12 +277,10 @@ export function EditInvoice({ data }: iAppProps) {
 					<div>
 						<Label>Note</Label>
 						<Textarea
-							name={fields.note.name}
-							key={fields.note.key}
 							defaultValue={data.note ?? undefined}
 							placeholder="Add any additional information..."
+							disabled
 						/>
-						<p className="text-sm text-red-500">{fields.note.errors}</p>
 					</div>
 
 					<div className="flex items-center justify-between mt-6">
@@ -353,7 +292,7 @@ export function EditInvoice({ data }: iAppProps) {
 						</Link>
 
 						<div>
-							<SubmitButton text="Update Invoice" />
+							<SubmitButton text="Reopen Invoice" />
 						</div>
 					</div>
 				</form>
