@@ -13,6 +13,7 @@ async function getData(userId: string) {
 			},
 			select: {
 				total: true,
+				currency: true,
 			},
 		}),
 		prisma.invoice.findMany({
