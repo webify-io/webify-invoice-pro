@@ -3,6 +3,8 @@ import prisma from '@/app/utils/db';
 import { requireUser } from '@/app/utils/hooks';
 
 async function getUserData(userId: string) {
+	//await new Promise((resolve) => setTimeout(resolve, 2500));
+
 	const data = await prisma.user.findUnique({
 		where: {
 			id: userId,
