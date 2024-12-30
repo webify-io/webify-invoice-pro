@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Activity, CreditCard, DollarSign, UsersIcon } from 'lucide-react';
 import prisma from '../utils/db';
 import { requireUser } from '../utils/hooks';
+import { formatCurrency } from '../utils/formatCurrency';
 
 async function getData(userId: string) {
 	//run all (multiple) queries to the db in parrellel
@@ -54,12 +55,16 @@ export async function DashboardBlocks() {
 		<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 md:gap-8">
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-					<CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+					<CardTitle className="text-sm font-medium">
+						Total Projected Revenue
+					</CardTitle>
 					<DollarSign className="size-4 text-muted-foreground" />
 				</CardHeader>
 				<CardContent>
 					<h2 className="text-2xl font-semibold">
-						R{data.reduce((acc, invoice) => acc + invoice.total, 0)}
+						{formatCurrency({
+							amount: data.reduce((acc, invoice) => acc + invoice.total, 0),
+						})}
 					</h2>
 					<p className="text-xs text-muted-foreground">
 						Based on the last 30 Days
@@ -76,7 +81,7 @@ export async function DashboardBlocks() {
 				<CardContent>
 					<h2 className="text-2xl font-bold">+{data.length}</h2>
 					<p className="text-xs text-muted-foreground">
-						Total Invoices Issued!
+						Total Invoices which has been Send!
 					</p>
 				</CardContent>
 			</Card>

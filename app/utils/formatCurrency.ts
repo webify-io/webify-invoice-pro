@@ -1,10 +1,10 @@
 // Function to store currency
 interface iAppProps {
 	amount: number;
-	currency: 'ZAR' | 'USD' | 'EUR';
+	currency?: 'ZAR' | 'USD' | 'EUR';
 }
 
-export function formatCurrency({ amount, currency }: iAppProps) {
+export function formatCurrency({ amount, currency = 'ZAR' }: iAppProps) {
 	let formattedAmount = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: currency,

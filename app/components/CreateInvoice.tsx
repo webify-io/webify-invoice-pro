@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -27,6 +27,7 @@ import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { invoiceSchema } from '../utils/zodSchemas';
 import { formatCurrency } from '../utils/formatCurrency';
+import Link from 'next/link';
 
 interface iAppProps {
 	firstName: string;
@@ -90,7 +91,7 @@ export function CreateInvoice({
 								name={fields.invoiceName.name}
 								key={fields.invoiceName.key}
 								defaultValue={fields.invoiceName.initialValue}
-								placeholder="Test 123"
+								placeholder="Company Name"
 							/>
 						</div>
 						<p className="text-sm text-red-500">{fields.invoiceName.errors}</p>
@@ -351,7 +352,14 @@ export function CreateInvoice({
 						<p className="text-sm text-red-500">{fields.note.errors}</p>
 					</div>
 
-					<div className="flex items-center justify-end mt-6">
+					<div className="flex items-center justify-between mt-6">
+						<Link
+							className={buttonVariants({ variant: 'outline' })}
+							href="/dashboard/invoices"
+						>
+							Cancel
+						</Link>
+
 						<div>
 							<SubmitButton text="Send Invoice to Client" />
 						</div>
