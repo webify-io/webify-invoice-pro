@@ -196,7 +196,7 @@ export function EditInvoice({ data }: iAppProps) {
 						</div>
 					</div>
 
-					<div className="grid grid-cols-2 gap-6 mb-6">
+					<div className="flex flex-col md:grid md:grid-cols-2 gap-6 mb-6">
 						<div>
 							<div>
 								<Label>Date</Label>
@@ -252,15 +252,16 @@ export function EditInvoice({ data }: iAppProps) {
 					</div>
 
 					<div>
-						<div className="grid grid-cols-12 gap-4 mb-2 font-medium">
+						<div className="hidden md:grid md:grid-cols-12 gap-4 mb-2 font-medium">
 							<p className="col-span-6">Description</p>
 							<p className="col-span-2">Quantity</p>
 							<p className="col-span-2">Rate</p>
 							<p className="col-span-2">Amount</p>
 						</div>
 
-						<div className="grid grid-cols-12 gap-4 mb-4">
+						<div className="flex flex-col md:grid md:grid-cols-12 gap-4 mb-4">
 							<div className="col-span-6">
+								<Label className="md:hidden font-medium">Description</Label>
 								<Textarea
 									name={fields.invoiceItemDescription.name}
 									key={fields.invoiceItemDescription.key}
@@ -272,6 +273,7 @@ export function EditInvoice({ data }: iAppProps) {
 								</p>
 							</div>
 							<div className="col-span-2">
+								<Label className="md:hidden font-medium">Quantity</Label>
 								<Input
 									name={fields.invoiceitemQuantity.name}
 									key={fields.invoiceitemQuantity.key}
@@ -285,6 +287,7 @@ export function EditInvoice({ data }: iAppProps) {
 								</p>
 							</div>
 							<div className="col-span-2">
+								<Label className="md:hidden font-medium">Rate</Label>
 								<Input
 									name={fields.invoiceItemRate.name}
 									key={fields.invoiceItemRate.key}
@@ -298,6 +301,7 @@ export function EditInvoice({ data }: iAppProps) {
 								</p>
 							</div>
 							<div className="col-span-2">
+								<Label className="md:hidden font-medium">Amount</Label>
 								<Input
 									value={formatCurrency({
 										amount: calculateTotal,
@@ -311,7 +315,7 @@ export function EditInvoice({ data }: iAppProps) {
 					</div>
 
 					<div className="flex justify-end">
-						<div className="w-1/3">
+						<div className="md:w-1/3">
 							<div className="flex justify-between py-2">
 								<span>Subtotal</span>
 								<span>
