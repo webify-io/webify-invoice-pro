@@ -67,7 +67,7 @@ export async function createInvoice(prevState: any, formData: FormData) {
 		},
 	});
 
-	// Send client email using Mailtrap API:
+	// Onboarding Route: Send client email using Mailtrap API:
 	const sender = {
 		email: 'hello@email.webify.org.za',
 		name: 'InvoicePro by Webify',
@@ -92,7 +92,10 @@ export async function createInvoice(prevState: any, formData: FormData) {
 				amount: submission.value.total,
 				currency: submission.value.currency as any,
 			}),
-			invoiceLink: `http://localhost:3000/api/invoice/${data.id}`,
+			invoiceLink:
+				process.env.NODE_ENV !== 'production'
+					? `http://localhost:3000/api/invoice/${data.id}`
+					: `http://webify-invoice-pro.vercel.app/api/invoice/${data.id}`,
 		},
 	});
 
@@ -100,7 +103,6 @@ export async function createInvoice(prevState: any, formData: FormData) {
 }
 
 // Edit Invoice Server Action:
-
 export async function editInvoice(prevState: any, formData: FormData) {
 	const session = await requireUser();
 
@@ -165,7 +167,10 @@ export async function editInvoice(prevState: any, formData: FormData) {
 				amount: submission.value.total,
 				currency: submission.value.currency as any,
 			}),
-			invoiceLink: `http://localhost:3000/api/invoice/${data.id}`,
+			invoiceLink:
+				process.env.NODE_ENV !== 'production'
+					? `http://localhost:3000/api/invoice/${data.id}`
+					: `http://webify-invoice-pro.vercel.app/api/invoice/${data.id}`,
 		},
 	});
 
