@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export function Footer() {
 	return (
-		<footer className="flex flex-col md:flex-row mx-auto max-w-5xl px-5 items-center justify-center md:justify-between mt-16 mb-6 text-sm">
+		<footer className="flex flex-col md:flex-row mx-auto max-w-5xl px-5 gap-2 items-center justify-center md:justify-between mt-16 mb-6 text-xs md:text-sm text-muted-foreground">
 			<p>InvoicePro &copy; {new Date().getFullYear()}.</p>
 			<p className="text-center">
 				Created by

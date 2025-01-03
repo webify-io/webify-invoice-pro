@@ -73,6 +73,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 								defaultValue={data.invoiceName}
 								placeholder="Test 123"
 								disabled
+								className="text-sm"
 							/>
 						</div>
 					</div>
@@ -86,7 +87,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 								</span>
 								<Input
 									defaultValue={data.invoiceNumber}
-									className="rounded-l-none"
+									className="rounded-l-none text-sm"
 									placeholder="5"
 									disabled
 								/>
@@ -116,16 +117,19 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									placeholder="Your Name"
 									defaultValue={data.fromName}
 									disabled
+									className="text-sm"
 								/>
 								<Input
 									placeholder="Your Email"
 									defaultValue={data.fromEmail}
 									disabled
+									className="text-sm"
 								/>
 								<Input
 									placeholder="Your Address"
 									defaultValue={data.fromAddress}
 									disabled
+									className="text-sm"
 								/>
 								{/* <p className="text-sm text-red-500">
 									{fields.fromAddress.errors}
@@ -140,18 +144,21 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									defaultValue={data.clientName}
 									placeholder="Client Name"
 									disabled
+									className="text-sm"
 								/>
 
 								<Input
 									defaultValue={data.clientEmail}
 									placeholder="Client Email"
 									disabled
+									className="text-sm"
 								/>
 
 								<Input
 									defaultValue={data.clientAddress}
 									placeholder="Client Address"
 									disabled
+									className="text-sm"
 								/>
 							</div>
 						</div>
@@ -221,6 +228,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									defaultValue={data.invoiceItemDescription}
 									placeholder="Item Name"
 									disabled
+									className="text-sm"
 								/>
 							</div>
 							<div className="col-span-2">
@@ -230,6 +238,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									placeholder="0"
 									value={data.invoiceitemQuantity}
 									disabled
+									className="text-sm"
 								/>
 							</div>
 							<div className="col-span-2">
@@ -239,6 +248,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									placeholder="0"
 									value={data.invoiceItemRate}
 									disabled
+									className="text-sm"
 								/>
 							</div>
 							<div className="col-span-2">
@@ -250,6 +260,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									})}
 									placeholder="0"
 									disabled
+									className="text-sm"
 								/>
 							</div>
 						</div>
@@ -284,6 +295,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 							defaultValue={data.note ?? undefined}
 							placeholder="Add any additional information..."
 							disabled
+							className="text-sm"
 						/>
 					</div>
 
