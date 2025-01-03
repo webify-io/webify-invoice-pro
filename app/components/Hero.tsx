@@ -31,7 +31,7 @@ export function Hero() {
 
 			<div className="relative items-center w-full py-12 mx-auto mt-12">
 				<svg
-					className="absolute inset-0 -mt-10 md:-mt-24 blur-3xl"
+					className="absolute -inset-2 md:inset-0 -mt-10 md:-mt-24 blur-3xl"
 					style={{ zIndex: -1 }}
 					fill="none"
 					viewBox="0 0 400 400"
