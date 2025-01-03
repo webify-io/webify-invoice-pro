@@ -23,7 +23,7 @@ export function Graph({ data }: iAppProps) {
 					color: 'hsl(var(--primary))',
 				},
 			}}
-			className="min-h-[300px]"
+			className="md:min-h-[300px]"
 		>
 			<ResponsiveContainer width="100%" height="100%">
 				<LineChart data={data}>

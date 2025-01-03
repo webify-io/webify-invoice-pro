@@ -10,7 +10,6 @@ import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import {
 	CheckCircle,
 	DownloadCloudIcon,
-	Eye,
 	LockOpen,
 	Mail,
 	MoreHorizontal,

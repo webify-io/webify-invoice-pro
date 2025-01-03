@@ -207,7 +207,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 					</div>
 
 					<div>
-						<div className="hidden md:grid md:grid-cols-12gap-4 mb-2 font-medium">
+						<div className="hidden md:grid md:grid-cols-12 gap-4 mb-2 text-sm font-medium ">
 							<p className="col-span-6">Description</p>
 							<p className="col-span-2">Quantity</p>
 							<p className="col-span-2">Rate</p>
@@ -255,7 +255,7 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 						</div>
 					</div>
 
-					<div className="flex justify-end">
+					<div className="flex justify-end text-sm">
 						<div className="md:w-1/3">
 							<div className="flex justify-between py-2">
 								<span>Subtotal</span>
@@ -266,9 +266,9 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 									})}
 								</span>
 							</div>
-							<div className="flex justify-between py-2 border-t">
+							<div className="flex justify-between py-2 border-t gap-2 font-semibold">
 								<span>Total ({data.currency})</span>
-								<span className="font-medium underline underline-offset-4 text-muted-foreground">
+								<span className="underline underline-offset-4 text-muted-foreground">
 									{formatCurrency({
 										amount: data.total,
 										currency: data.currency as any,

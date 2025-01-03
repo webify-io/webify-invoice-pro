@@ -39,7 +39,7 @@ export default async function DashboardRoute() {
 			) : (
 				<Suspense fallback={<SkeletonInvoiceList />}>
 					<DashboardBlocks />
-					<div className="grid gap-4 lg:grid-cols-3 md:gap-8">
+					<div className="flex flex-col md:grid gap-4 lg:grid-cols-3 md:gap-8">
 						<InvoiceGraph />
 						<RecentInvoices />
 					</div>

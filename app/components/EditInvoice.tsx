@@ -83,7 +83,8 @@ export function EditInvoice({ data }: iAppProps) {
 								name={fields.invoiceName.name}
 								key={fields.invoiceName.key}
 								defaultValue={data.invoiceName}
-								placeholder="Test 123"
+								placeholder="Company Name"
+								className="text-sm"
 							/>
 						</div>
 						<p className="text-sm text-red-500">{fields.invoiceName.errors}</p>
@@ -100,7 +101,7 @@ export function EditInvoice({ data }: iAppProps) {
 									name={fields.invoiceNumber.name}
 									key={fields.invoiceNumber.key}
 									defaultValue={data.invoiceNumber}
-									className="rounded-l-none"
+									className="rounded-l-none text-sm"
 									placeholder="5"
 								/>
 							</div>
@@ -139,6 +140,7 @@ export function EditInvoice({ data }: iAppProps) {
 									key={fields.fromName.key}
 									placeholder="Your Name"
 									defaultValue={data.fromName}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">{fields.fromName.errors}</p>
 								<Input
@@ -146,6 +148,7 @@ export function EditInvoice({ data }: iAppProps) {
 									key={fields.fromEmail.key}
 									placeholder="Your Email"
 									defaultValue={data.fromEmail}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.fromEmail.errors}
@@ -155,6 +158,7 @@ export function EditInvoice({ data }: iAppProps) {
 									key={fields.fromAddress.key}
 									placeholder="Your Address"
 									defaultValue={data.fromAddress}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.fromAddress.errors}
@@ -170,6 +174,7 @@ export function EditInvoice({ data }: iAppProps) {
 									key={fields.clientName.key}
 									defaultValue={data.clientName}
 									placeholder="Client Name"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.clientName.errors}
@@ -179,6 +184,7 @@ export function EditInvoice({ data }: iAppProps) {
 									key={fields.clientEmail.key}
 									defaultValue={data.clientEmail}
 									placeholder="Client Email"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.clientEmail.errors}
@@ -188,6 +194,7 @@ export function EditInvoice({ data }: iAppProps) {
 									key={fields.clientAddress.key}
 									defaultValue={data.clientAddress}
 									placeholder="Client Address"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.clientAddress.errors}
@@ -252,7 +259,7 @@ export function EditInvoice({ data }: iAppProps) {
 					</div>
 
 					<div>
-						<div className="hidden md:grid md:grid-cols-12 gap-4 mb-2 font-medium">
+						<div className="hidden md:grid md:grid-cols-12 gap-4 mb-2 text-sm font-medium text-nowrap">
 							<p className="col-span-6">Description</p>
 							<p className="col-span-2">Quantity</p>
 							<p className="col-span-2">Rate</p>
@@ -266,7 +273,8 @@ export function EditInvoice({ data }: iAppProps) {
 									name={fields.invoiceItemDescription.name}
 									key={fields.invoiceItemDescription.key}
 									defaultValue={data.invoiceItemDescription}
-									placeholder="Item Name"
+									placeholder="Invoice Description"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.invoiceItemDescription.errors}
@@ -281,6 +289,7 @@ export function EditInvoice({ data }: iAppProps) {
 									placeholder="0"
 									value={quantity}
 									onChange={(e) => setQuantity(e.target.value)}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.invoiceitemQuantity.errors}
@@ -295,6 +304,7 @@ export function EditInvoice({ data }: iAppProps) {
 									placeholder="0"
 									value={rate}
 									onChange={(e) => setRate(e.target.value)}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.invoiceItemRate.errors}
@@ -309,12 +319,13 @@ export function EditInvoice({ data }: iAppProps) {
 									})}
 									placeholder="0"
 									disabled
+									className="text-sm"
 								/>
 							</div>
 						</div>
 					</div>
 
-					<div className="flex justify-end">
+					<div className="flex justify-end text-sm">
 						<div className="md:w-1/3">
 							<div className="flex justify-between py-2">
 								<span>Subtotal</span>
@@ -325,9 +336,9 @@ export function EditInvoice({ data }: iAppProps) {
 									})}
 								</span>
 							</div>
-							<div className="flex justify-between py-2 border-t">
+							<div className="flex justify-between py-2 border-t gap-2 font-semibold">
 								<span>Total ({currency})</span>
-								<span className="font-medium underline underline-offset-4">
+								<span className="underline underline-offset-4">
 									{formatCurrency({
 										amount: calculateTotal,
 										currency: currency as any,
@@ -344,6 +355,7 @@ export function EditInvoice({ data }: iAppProps) {
 							key={fields.note.key}
 							defaultValue={data.note ?? undefined}
 							placeholder="Add any additional information..."
+							className="text-sm"
 						/>
 						<p className="text-sm text-red-500">{fields.note.errors}</p>
 					</div>

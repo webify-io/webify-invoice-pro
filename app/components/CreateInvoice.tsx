@@ -92,6 +92,7 @@ export function CreateInvoice({
 								key={fields.invoiceName.key}
 								defaultValue={fields.invoiceName.initialValue}
 								placeholder="Company Name"
+								className="text-sm"
 							/>
 						</div>
 						<p className="text-sm text-red-500">{fields.invoiceName.errors}</p>
@@ -108,7 +109,7 @@ export function CreateInvoice({
 									name={fields.invoiceNumber.name}
 									key={fields.invoiceNumber.key}
 									defaultValue={fields.invoiceNumber.initialValue}
-									className="rounded-l-none"
+									className="rounded-l-none text-sm"
 									placeholder="5"
 								/>
 							</div>
@@ -147,6 +148,7 @@ export function CreateInvoice({
 									key={fields.fromName.key}
 									placeholder="Your Name"
 									defaultValue={firstName + ' ' + lastName}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">{fields.fromName.errors}</p>
 								<Input
@@ -154,6 +156,7 @@ export function CreateInvoice({
 									key={fields.fromEmail.key}
 									placeholder="Your Email"
 									defaultValue={email}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.fromEmail.errors}
@@ -163,6 +166,7 @@ export function CreateInvoice({
 									key={fields.fromAddress.key}
 									placeholder="Your Address"
 									defaultValue={address}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.fromAddress.errors}
@@ -178,6 +182,7 @@ export function CreateInvoice({
 									key={fields.clientName.key}
 									defaultValue={fields.clientName.initialValue}
 									placeholder="Client Name"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.clientName.errors}
@@ -187,6 +192,7 @@ export function CreateInvoice({
 									key={fields.clientEmail.key}
 									defaultValue={fields.clientEmail.initialValue}
 									placeholder="Client Email"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.clientEmail.errors}
@@ -196,6 +202,7 @@ export function CreateInvoice({
 									key={fields.clientAddress.key}
 									defaultValue={fields.clientAddress.initialValue}
 									placeholder="Client Address"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.clientAddress.errors}
@@ -275,6 +282,7 @@ export function CreateInvoice({
 									key={fields.invoiceItemDescription.key}
 									defaultValue={fields.invoiceItemDescription.initialValue}
 									placeholder="Item Name"
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.invoiceItemDescription.errors}
@@ -289,6 +297,7 @@ export function CreateInvoice({
 									placeholder="0"
 									value={quantity}
 									onChange={(e) => setQuantity(e.target.value)}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.invoiceitemQuantity.errors}
@@ -303,6 +312,7 @@ export function CreateInvoice({
 									placeholder="0"
 									value={rate}
 									onChange={(e) => setRate(e.target.value)}
+									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
 									{fields.invoiceItemRate.errors}
@@ -317,12 +327,13 @@ export function CreateInvoice({
 									})}
 									placeholder="0"
 									disabled
+									className="text-sm"
 								/>
 							</div>
 						</div>
 					</div>
 
-					<div className="flex justify-end">
+					<div className="flex justify-end text-sm">
 						<div className="md:w-1/3">
 							<div className="flex justify-between py-2">
 								<span>Subtotal</span>
@@ -333,9 +344,9 @@ export function CreateInvoice({
 									})}
 								</span>
 							</div>
-							<div className="flex justify-between py-2 border-t">
+							<div className="flex justify-between py-2 border-t gap-2 font-semibold">
 								<span>Total ({currency})</span>
-								<span className="font-medium underline underline-offset-4">
+								<span className="underline underline-offset-4">
 									{formatCurrency({
 										amount: calculateTotal,
 										currency: currency as any,
@@ -352,6 +363,7 @@ export function CreateInvoice({
 							key={fields.note.key}
 							defaultValue={fields.note.initialValue}
 							placeholder="Add any additional information..."
+							className="text-sm"
 						/>
 						<p className="text-sm text-red-500">{fields.note.errors}</p>
 					</div>

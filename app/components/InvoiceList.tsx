@@ -65,7 +65,9 @@ export async function InvoiceList() {
 						{data.map((invoice) => (
 							<TableRow key={invoice.id}>
 								<TableCell>#{invoice.invoiceNumber}</TableCell>
-								<TableCell>{invoice.clientName}</TableCell>
+								<TableCell className="text-nowrap">
+									{invoice.clientName}
+								</TableCell>
 								<TableCell>
 									{formatCurrency({
 										amount: invoice.total,
@@ -75,7 +77,7 @@ export async function InvoiceList() {
 								<TableCell>
 									<Badge>{invoice.status}</Badge>
 								</TableCell>
-								<TableCell>
+								<TableCell className="text-nowrap">
 									{new Intl.DateTimeFormat('en-US', {
 										dateStyle: 'medium',
 									}).format(invoice.createdAt)}
