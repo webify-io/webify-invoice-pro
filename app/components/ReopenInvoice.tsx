@@ -142,21 +142,21 @@ export default async function ReopenInvoice({ data, params }: iAppProps) {
 							<div className="space-y-2">
 								<Input
 									defaultValue={data.clientName}
-									placeholder="Client Name"
+									placeholder="Billing Name"
 									disabled
 									className="text-sm"
 								/>
 
 								<Input
 									defaultValue={data.clientEmail}
-									placeholder="Client Email"
+									placeholder="Billing Email"
 									disabled
 									className="text-sm"
 								/>
 
 								<Input
 									defaultValue={data.clientAddress}
-									placeholder="Client Address"
+									placeholder="Billing Address"
 									disabled
 									className="text-sm"
 								/>

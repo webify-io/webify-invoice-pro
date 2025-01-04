@@ -181,7 +181,7 @@ export function CreateInvoice({
 									name={fields.clientName.name}
 									key={fields.clientName.key}
 									defaultValue={fields.clientName.initialValue}
-									placeholder="Client Name"
+									placeholder="Billing Name"
 									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
@@ -191,7 +191,7 @@ export function CreateInvoice({
 									name={fields.clientEmail.name}
 									key={fields.clientEmail.key}
 									defaultValue={fields.clientEmail.initialValue}
-									placeholder="Client Email"
+									placeholder="Billing Email"
 									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
@@ -201,7 +201,7 @@ export function CreateInvoice({
 									name={fields.clientAddress.name}
 									key={fields.clientAddress.key}
 									defaultValue={fields.clientAddress.initialValue}
-									placeholder="Client Address"
+									placeholder="Billing Address"
 									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">

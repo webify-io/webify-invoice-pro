@@ -173,7 +173,7 @@ export function EditInvoice({ data }: iAppProps) {
 									name={fields.clientName.name}
 									key={fields.clientName.key}
 									defaultValue={data.clientName}
-									placeholder="Client Name"
+									placeholder="Billing Name"
 									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
@@ -183,7 +183,7 @@ export function EditInvoice({ data }: iAppProps) {
 									name={fields.clientEmail.name}
 									key={fields.clientEmail.key}
 									defaultValue={data.clientEmail}
-									placeholder="Client Email"
+									placeholder="Billing Email"
 									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
@@ -193,7 +193,7 @@ export function EditInvoice({ data }: iAppProps) {
 									name={fields.clientAddress.name}
 									key={fields.clientAddress.key}
 									defaultValue={data.clientAddress}
-									placeholder="Client Address"
+									placeholder="Billing Address"
 									className="text-sm"
 								/>
 								<p className="text-sm text-red-500">
